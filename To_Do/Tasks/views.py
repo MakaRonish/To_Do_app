@@ -20,4 +20,18 @@ def AddTask(request):
     return render(request, "Tasks/addtask.html", context)
 
 
+def EditTask(request, pk):
+    instance = tasks.objects.get(id=pk)
+    form = TaskForm(instance=instance)
+    context = {"form": form}
+    if request.method == "POST":
+        form = TaskForm(request.POST, instance=instance)
+        print("bahira")
+        if form.is_valid():
+            print("valid")
+            form.save()
+            return redirect("landing-page")
+    return render(request, "Tasks/edittask.html", context)
+
+
 # Create your views here.

@@ -6,9 +6,9 @@ import uuid
 
 class tasks(models.Model):
     type = [
-        ("w", "Work"),
-        ("p", "Personal"),
-        ("o", "Others"),
+        ("Work", "Work"),
+        ("Personal", "Personal"),
+        ("Others", "Others"),
     ]
     id = models.UUIDField(
         default=uuid.uuid4, primary_key=True, unique=True, editable=True
@@ -18,7 +18,7 @@ class tasks(models.Model):
     description = models.TextField(null=True, blank=True, max_length=500)
     completed = models.BooleanField(default=False)
     deadline = models.DateTimeField(null=True, blank=True)
-    category = models.CharField(max_length=1, choices=type)
+    category = models.CharField(max_length=8, choices=type)
 
     def __str__(self):
         return self.task

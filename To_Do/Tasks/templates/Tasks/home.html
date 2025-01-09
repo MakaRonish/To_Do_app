@@ -3,4 +3,32 @@
 {%block content%}
 <h1>home</h1>
 <a href="{%url 'add-task'%}">Add task</a>
+
+<h2>Task left to do</h2>
+<table border="1px solid black">
+    <tr>
+        <th>id</th>
+        <th>task</th>
+        <th>description</th>
+        <th>deadline</th>
+        <th>completed</th>
+        <th>category</th>
+        <th>created</th>
+        <th>Edit</th>
+        <th>remove</th>
+    </tr>
+    {%for task in data%}
+    <tr>
+        <th>{{task.id}}</th>
+        <th>{{task.task}}</th>
+        <th>{{task.description}}</th>
+        <th>{{task.deadline}}</th>
+        <th>{{task.completed}}</th>
+        <th>{{task.category}}</th>
+        <th>{{task.created}}</th>
+        <th><a href="{% url 'edit-task' task.id%}">Edit</a></th>
+        <th><a href="">delete</a></th>
+    </tr>
+    {%endfor%}
+</table>
 {%endblock content%}
