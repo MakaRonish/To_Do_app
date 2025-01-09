@@ -18,7 +18,7 @@ class tasks(models.Model):
     description = models.TextField(null=True, blank=True, max_length=500)
     completed = models.BooleanField(default=False)
     deadline = models.DateTimeField(null=True, blank=True)
-    category = models.CharField(choices=type)
+    category = models.CharField(max_length=1, choices=type)
 
     def __str__(self):
         return self.task

@@ -4,6 +4,14 @@
 <h1>
     Add task
 </h1>
+<h1>nice</h1>
+
 <a href="{%url 'landing-page'%}">home</a>
+
+<form action="{%url 'add-task'%}" method="post">
+    {%csrf_token%}
+    {{form.as_p}}
+    <button type="submit">Add task</button>
+</form>
 
 {%endblock content%}

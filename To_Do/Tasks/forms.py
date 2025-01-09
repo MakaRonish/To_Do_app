@@ -3,7 +3,7 @@ from django import forms
 from .models import tasks
 
 
-class TaskForm:
+class TaskForm(ModelForm):
     class Meta:
         model = tasks
         fields = ["task", "description", "deadline", "category"]
