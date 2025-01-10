@@ -27,7 +27,7 @@
         <th>{{task.category}}</th>
         <th>{{task.created}}</th>
         <th><a href="{% url 'edit-task' task.id%}">Edit</a></th>
-        <th><a href="">delete</a></th>
+        <th><a href="{% url 'delete-task' task.id%}">delete</a></th>
     </tr>
     {%endfor%}
 </table>

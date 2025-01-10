@@ -34,4 +34,10 @@ def EditTask(request, pk):
     return render(request, "Tasks/edittask.html", context)
 
 
+def DeleteTask(request, pk):
+    task = tasks.objects.get(id=pk)
+    task.delete()
+    return redirect("landing-page")
+
+
 # Create your views here.
