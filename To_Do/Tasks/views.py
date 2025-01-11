@@ -6,6 +6,20 @@ from .forms import TaskForm
 def LandingPage(request):
     data = tasks.objects.all()
     context = {"data": data}
+    if request.method == "POST":
+        id = request.POST["id"]
+        element = tasks.objects.get(id=id)
+        if element.completed:
+
+            element.completed = False
+            element.save()
+
+        else:
+            element.completed = True
+            element.save()
+
+        return redirect("landing-page")
+
     return render(request, "Tasks/home.html", context)
 
 

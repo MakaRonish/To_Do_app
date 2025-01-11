@@ -28,6 +28,17 @@
         <th>{{task.created}}</th>
         <th><a href="{% url 'edit-task' task.id%}">Edit</a></th>
         <th><a href="{% url 'delete-task' task.id%}">delete</a></th>
+        <th>
+            <form action="" method="post">
+                {%csrf_token%}
+                <input type="hidden" name="id" value="{{task.id}}">
+                {%if task.completed%}
+                <button type="submit">Mark as incomplete</button>
+                {%else%}
+                <button type="submit">Mark as complete</button>
+                {%endif%}
+            </form>
+        </th>
     </tr>
     {%endfor%}
 </table>
