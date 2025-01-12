@@ -4,6 +4,7 @@
 <h1>home</h1>
 <a href="{%url 'add-task'%}">Add task</a>
 
+{%if data%}
 <h2>Task left to do</h2>
 <table border="1px solid black">
     <tr>
@@ -42,4 +43,5 @@
     </tr>
     {%endfor%}
 </table>
+{%endif%}
 {%endblock content%}
