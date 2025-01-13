@@ -6,7 +6,7 @@ from django.contrib.auth.models import User
 
 
 class tasks(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, null=False, blank=False)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
     type = [
         ("Work", "Work"),
         ("Personal", "Personal"),

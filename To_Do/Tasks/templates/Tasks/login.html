@@ -1,0 +1,13 @@
+{%extends 'index.html'%}
+{%block content%}
+<form action="" method="post">
+    {%csrf_token%}
+    {{form.as_p}}
+    <button type="submit">Login</button>
+
+</form>
+<a href="{%url 'signin'%}"> Sign In</a>
+
+<h1>hello</h1>
+
+{%endblock content%}
