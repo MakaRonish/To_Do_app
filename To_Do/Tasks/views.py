@@ -9,7 +9,8 @@ from django.contrib.auth.models import User
 
 @login_required(login_url="signin")
 def LandingPage(request):
-    data = tasks.objects.all()
+
+    data = tasks.objects.filter(user=request.user)
     context = {"data": data}
     if request.method == "POST":
         id = request.POST["id"]
@@ -72,6 +73,8 @@ def Login(request):
         if form.is_valid():
             user = form.save(commit=False)
             user.save()
+            login(request, user)
+            return redirect("landing-page")
 
     return render(request, "Tasks/login.html", context)
 
@@ -80,10 +83,7 @@ def SignIn(request):
     if request.method == "POST":
         username = request.POST["username"]
         password = request.POST["password"]
-        if User.objects.get(username=username):
-            print("exist")
         user = authenticate(request, username=username, password=password)
-
         if user is not None:
             login(request, user)
             return redirect("landing-page")
