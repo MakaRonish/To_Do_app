@@ -5,6 +5,7 @@ from django.contrib.auth import login, authenticate, logout
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
+from .signals import WelcomeMessage
 
 
 @login_required(login_url="signin")
@@ -12,14 +13,13 @@ def LandingPage(request):
 
     data = tasks.objects.filter(user=request.user)
     context = {"data": data}
+    WelcomeMessage()
     if request.method == "POST":
         id = request.POST["id"]
         element = tasks.objects.get(id=id)
         if element.completed:
-
             element.completed = False
             element.save()
-
         else:
             element.completed = True
             element.save()
