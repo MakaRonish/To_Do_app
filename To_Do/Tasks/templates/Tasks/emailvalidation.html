@@ -1,0 +1,8 @@
+{%extends 'index.html'%}
+{%block content%}
+<form action="" method="post">
+    {%csrf_token%}
+    <input type="number" name="code" placeholder="Enter your code">
+    <button type="submit"> verify</button>
+</form>
+{%endblock content%}

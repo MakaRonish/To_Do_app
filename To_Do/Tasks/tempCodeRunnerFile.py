@@ -1,2 +1,2 @@
-import os
-print(os.environ.get("EMAIL_P"))
+import random
+print(random.randint(1000,9999))

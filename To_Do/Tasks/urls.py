@@ -25,4 +25,5 @@ urlpatterns = [
     path("edit-Task/<str:pk>", views.EditTask, name="edit-task"),
     path("Delete-Task/<str:pk>", views.DeleteTask, name="delete-task"),
     path("logout/", views.LogoutUser, name="logout"),
+    path("validation/", views.EmailVerification, name="validation"),
 ]

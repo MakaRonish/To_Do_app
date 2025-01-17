@@ -3,6 +3,7 @@
 {%block content%}
 <a href="{%url 'logout'%}">Logout</a>
 <h1>home</h1>
+<h1>hii {{request.user}}</h1>
 <a href="{%url 'add-task'%}">Add task</a>
 
 {%if data%}
