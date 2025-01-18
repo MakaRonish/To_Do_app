@@ -7,6 +7,8 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from .signals import WelcomeMessage, EmailVerify
 import random
+from django.utils import timezone
+from datetime import timedelta
 
 
 @login_required(login_url="signin")
@@ -37,6 +39,13 @@ def AddTask(request):
         if form.is_valid():
             task = form.save(commit=False)
             task.user = request.user
+            deadline = task.deadline
+            current_time = timezone.now()
+
+            time_diff = deadline - current_time
+            target_time = deadline - timedelta(hours=24)
+            delay = (target_time - current_time).total_seconds()
+            print(delay)
             task.save()
             return redirect("landing-page")
     return render(request, "Tasks/addtask.html", context)
@@ -49,7 +58,7 @@ def EditTask(request, pk):
     context = {"form": form}
     if request.method == "POST":
         form = TaskForm(request.POST, instance=instance)
-        print("bahira")
+
         if form.is_valid():
             print("valid")
             form.save()

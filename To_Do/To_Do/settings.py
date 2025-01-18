@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
+from huey import RedisHuey
 from pathlib import Path
 import os
 
@@ -40,6 +41,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "Tasks.apps.TasksConfig",
+    "huey.contrib.djhuey",
 ]
 
 MIDDLEWARE = [
@@ -83,6 +85,18 @@ DATABASES = {
         "ENGINE": "django.db.backends.sqlite3",
         "NAME": BASE_DIR / "db.sqlite3",
     }
+}
+# this is for asyncronus work
+HUEY = {
+    "huey_class": "huey.SqliteHuey",  # In-memory implementation
+    "name": "To_Do",
+    "immediate": False,
+    "results": False,  # No need to store results.
+    "store_none": False,  # Avoid storing None results.
+    "utc": False,  # Use Server time for internal times.
+    "consumer": {
+        "workers": 1,  # Only one worker is needed for this simple setup.
+    },
 }
 
 
