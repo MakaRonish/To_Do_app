@@ -5,7 +5,7 @@ from django.contrib.auth import login, authenticate, logout
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
-from .signals import WelcomeMessage, EmailVerify
+from .signals import WelcomeMessage, EmailVerify, AlertTask
 import random
 from django.utils import timezone
 from datetime import timedelta
@@ -45,7 +45,10 @@ def AddTask(request):
             time_diff = deadline - current_time
             target_time = deadline - timedelta(hours=24)
             delay = (target_time - current_time).total_seconds()
-            print(delay)
+            if delay < 0:
+                delay = 0
+            AlertTask.apply_async(countdown=delay)
+
             task.save()
             return redirect("landing-page")
     return render(request, "Tasks/addtask.html", context)

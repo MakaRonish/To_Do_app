@@ -1,5 +1,9 @@
 from django.core.mail import send_mail
 from django.conf import settings
+from huey import Huey
+from huey.contrib.djhuey import task
+
+huey = Huey()
 
 
 def EmailVerify(code, receiver):
@@ -21,3 +25,8 @@ def WelcomeMessage(receiver):
         [receiver],
         fail_silently=False,
     )
+
+
+@task()
+def AlertTask():
+    print("task due")
