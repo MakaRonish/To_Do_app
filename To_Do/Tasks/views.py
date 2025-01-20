@@ -40,14 +40,12 @@ def AddTask(request):
             task = form.save(commit=False)
             task.user = request.user
             deadline = task.deadline
-            current_time = timezone.now()
-
-            time_diff = deadline - current_time
-            target_time = deadline - timedelta(hours=24)
-            delay = (target_time - current_time).total_seconds()
-            if delay < 0:
-                delay = 0
-            AlertTask.apply_async(countdown=delay)
+            current_time = timezone.localtime()
+            print("current time", current_time)
+            print("deadline time", deadline)
+            number_of_hour = int((deadline - current_time).total_seconds() / 3600)
+            print("difference", number_of_hour_email)
+            hour_to_send_email = number_of_hour - 24
 
             task.save()
             return redirect("landing-page")
