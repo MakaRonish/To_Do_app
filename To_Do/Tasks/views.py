@@ -5,10 +5,12 @@ from django.contrib.auth import login, authenticate, logout
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
-from .signals import WelcomeMessage, EmailVerify, AlertTask
+from .signals import WelcomeMessage, EmailVerify, schedule_task_after_hours, huey
 import random
 from django.utils import timezone
 from datetime import timedelta
+
+# assuming huey instance is in huey_instance.py
 
 
 @login_required(login_url="signin")
@@ -41,11 +43,24 @@ def AddTask(request):
             task.user = request.user
             deadline = task.deadline
             current_time = timezone.localtime()
+
+            # Calculate 24 hours before the deadline
+            time_before_deadline = deadline - timezone.timedelta(hours=24)
+
+            # Calculate the number of hours between the current time and 24 hours before the deadline
+            number_of_hour = (
+                time_before_deadline - current_time
+            ).total_seconds() / 3600
+
             print("current time", current_time)
             print("deadline time", deadline)
-            number_of_hour = int((deadline - current_time).total_seconds() / 3600)
-            print("difference", number_of_hour_email)
-            hour_to_send_email = number_of_hour - 24
+            print("time before deadline", time_before_deadline)
+            print("difference", number_of_hour)
+            if number_of_hour < 0:
+                number_of_hour = 0
+            print("number_of_hour", number_of_hour)
+
+            schedule_task_after_hours(number_of_hour)
 
             task.save()
             return redirect("landing-page")

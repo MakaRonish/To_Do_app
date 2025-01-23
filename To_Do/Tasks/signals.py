@@ -1,9 +1,12 @@
 from django.core.mail import send_mail
 from django.conf import settings
+from huey import crontab
 from huey import Huey
 from huey.contrib.djhuey import task
+from datetime import timedelta
+from django.utils import timezone
 
-huey = Huey()
+huey = Huey("To_Do")
 
 
 def EmailVerify(code, receiver):
@@ -27,6 +30,15 @@ def WelcomeMessage(receiver):
     )
 
 
-@task()
-def AlertTask():
-    print("task due")
+@huey.task()
+def alert():
+    print("hello")
+
+
+def schedule_task_after_hours(number_of_hours):
+
+    run_at = timezone.now() + timedelta(hours=number_of_hours)
+    print("bitra gayo")
+    print("eta", run_at)
+
+    alert.schedule(eta=run_at)

@@ -89,10 +89,10 @@ DATABASES = {
 # this is for asyncronus work
 HUEY = {
     "huey_class": "huey.RedisHuey",  # Huey implementation to use.
-    "name": DATABASES["default"]["NAME"],  # Use db name for huey.
+    "name": str(DATABASES["default"]["NAME"]),  # Use db name for huey.
     "results": True,  # Store return values of tasks.
     "store_none": False,  # If a task returns None, do not save to results.
-    "immediate": DEBUG,  # If DEBUG=True, run synchronously.
+    "immediate": False,  # If DEBUG=True, run synchronously.
     "utc": False,  # Use UTC for all times internally.
     "blocking": True,  # Perform blocking pop rather than poll Redis.
     "connection": {
@@ -106,7 +106,7 @@ HUEY = {
         "url": None,  # Allow Redis config via a DSN.
     },
     "consumer": {
-        "workers": 1,
+        "workers": 2,
         "worker_type": "thread",
         "initial_delay": 0.1,  # Smallest polling interval, same as -d.
         "backoff": 1.15,  # Exponential backoff using this rate, -b.
